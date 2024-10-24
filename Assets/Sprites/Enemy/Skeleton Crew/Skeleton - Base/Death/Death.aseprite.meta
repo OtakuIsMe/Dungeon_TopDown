@@ -290,7 +290,7 @@ ScriptedImporter:
     layerType: 0
     blendMode: 0
     cells:
-    - name: Death_Frame_0
+    - name: Frame_0
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -299,7 +299,7 @@ ScriptedImporter:
         width: 16
         height: 30
       spriteId: 224c9ae2dfe9d9645830ca07cc6e05df
-    - name: Death_Frame_1
+    - name: Frame_1
       frameIndex: 1
       additiveSortOrder: 0
       cellRect:
@@ -308,7 +308,7 @@ ScriptedImporter:
         width: 17
         height: 31
       spriteId: e685c4a66203d5b4298e8467fbb614aa
-    - name: Death_Frame_2
+    - name: Frame_2
       frameIndex: 2
       additiveSortOrder: 0
       cellRect:
@@ -317,7 +317,7 @@ ScriptedImporter:
         width: 19
         height: 38
       spriteId: 318d63a14cdcef94ca4815dd8a39cfad
-    - name: Death_Frame_3
+    - name: Frame_3
       frameIndex: 3
       additiveSortOrder: 0
       cellRect:
@@ -326,7 +326,7 @@ ScriptedImporter:
         width: 19
         height: 47
       spriteId: 98a10fc7ce8bfc04dbdcf245fd455145
-    - name: Death_Frame_4
+    - name: Frame_4
       frameIndex: 4
       additiveSortOrder: 0
       cellRect:
@@ -335,7 +335,7 @@ ScriptedImporter:
         width: 17
         height: 36
       spriteId: 6d07da1ff735edc4aa8a88de3b799704
-    - name: Death_Frame_5
+    - name: Frame_5
       frameIndex: 5
       additiveSortOrder: 0
       cellRect:
@@ -344,7 +344,7 @@ ScriptedImporter:
         width: 17
         height: 27
       spriteId: 25d4cf4137d384b4b99c2f322b847ce0
-    - name: Death_Frame_6
+    - name: Frame_6
       frameIndex: 6
       additiveSortOrder: 0
       cellRect:
@@ -353,7 +353,7 @@ ScriptedImporter:
         width: 17
         height: 11
       spriteId: c8c4ea57bc8001d4b9e345383843a293
-    - name: Death_Frame_7
+    - name: Frame_7
       frameIndex: 7
       additiveSortOrder: 0
       cellRect:
