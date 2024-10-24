@@ -210,7 +210,7 @@ ScriptedImporter:
     layerType: 0
     blendMode: 0
     cells:
-    - name: Frame_0
+    - name: Idle_Frame_0
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -219,7 +219,7 @@ ScriptedImporter:
         width: 19
         height: 29
       spriteId: 029e9ac4a70280c4d933997011490f8e
-    - name: Frame_1
+    - name: Idle_Frame_1
       frameIndex: 1
       additiveSortOrder: 0
       cellRect:
@@ -228,7 +228,7 @@ ScriptedImporter:
         width: 19
         height: 27
       spriteId: dbf36fd04e373fc468f0ffd0aa884cf6
-    - name: Frame_2
+    - name: Idle_Frame_2
       frameIndex: 2
       additiveSortOrder: 0
       cellRect:
@@ -237,7 +237,7 @@ ScriptedImporter:
         width: 19
         height: 27
       spriteId: ebfb0eb6ede73e740a1fa397b926a273
-    - name: Frame_3
+    - name: Idle_Frame_3
       frameIndex: 3
       additiveSortOrder: 0
       cellRect:
