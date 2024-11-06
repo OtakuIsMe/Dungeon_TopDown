@@ -9,7 +9,7 @@ public class SkeletonController : Singleton<SkeletonController>
     private Vector2 EnemyUserVector;
     private Transform playerTransform;
     private Transform enemyTransform;
-    private Vector3 enemyPlayerVector;
+    public Vector3 enemyPlayerVector;
     private SpriteRenderer mySpriteRenderer;
     protected void Awake()
     {
@@ -32,7 +32,7 @@ public class SkeletonController : Singleton<SkeletonController>
     {
         Vector3 enemyVector = enemyTransform.position;
         Vector3 playerVector = playerTransform.position;
-        Vector3 enemyPlayerVector = playerVector - enemyVector;
+        enemyPlayerVector = playerVector - enemyVector;
         if (enemyPlayerVector.x < 0)
         {
             mySpriteRenderer.flipX = true;
