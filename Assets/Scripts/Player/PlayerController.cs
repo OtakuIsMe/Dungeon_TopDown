@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Singleton<PlayerController>
 {
     [SerializeField] float PlayerSpeed = 5;
     private PlayerControls playerControls;
@@ -10,13 +10,20 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Animator myAnimation;
     private SpriteRenderer mySpriteRenderer;
+    private KnockBack knockBack;
+    AudioManager audioManager;
+    public bool isControlPlayer { get; set; } = true;
+    private bool isPlayAudio = false;
 
     private void Awake()
     {
+        base.Awake();
         playerControls = new PlayerControls();
         rb = GetComponent<Rigidbody2D>();
         myAnimation = GetComponent<Animator>();
         mySpriteRenderer = GetComponent<SpriteRenderer>();
+        knockBack = GetComponent<KnockBack>();
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     private void OnEnable()
@@ -24,27 +31,46 @@ public class PlayerController : MonoBehaviour
         playerControls.Enable();
     }
 
-    // Update is called once per frame
     private void Update()
     {
         PlayerInput();
     }
     private void FixedUpdate()
     {
-        FacingDirection();
-        Move();
+        if (isControlPlayer)
+        {
+            if (knockBack.gettingKnockedBack) { return; }
+            FacingDirection();
+            Move();
+        }
     }
     private void PlayerInput()
     {
         moveVector = playerControls.Movement.Move.ReadValue<Vector2>();
         myAnimation.SetFloat("MoveX", moveVector.x);
         myAnimation.SetFloat("MoveY", moveVector.y);
+        if (moveVector.x > 0.1 || moveVector.x < -0.1 || moveVector.y > 0.1 || moveVector.y < -0.1)
+        {
+            if (!isPlayAudio)
+            {
+                isPlayAudio = true;
+                StartCoroutine(PlayAudio());
+            }
+        }
     }
 
     private void Move()
     {
         rb.MovePosition(rb.position + moveVector * PlayerSpeed * Time.fixedDeltaTime);
     }
+    private IEnumerator PlayAudio()
+    {
+        audioManager.PlaySFX(audioManager.footStep);
+        yield return new WaitForSeconds(0.26f);
+        isPlayAudio = false;
+    }
+
+
 
     private void FacingDirection()
     {

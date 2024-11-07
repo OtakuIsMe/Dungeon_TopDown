@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,11 +7,18 @@ using UnityEngine.UIElements;
 
 public class SkeletonController : Singleton<SkeletonController>
 {
-    private Vector2 EnemyUserVector;
+    [SerializeField] private float speed = 2f;
+    [SerializeField] private float OutSight = 10f;
     private Transform playerTransform;
     private Transform enemyTransform;
     public Vector3 enemyPlayerVector;
     private SpriteRenderer mySpriteRenderer;
+    private Vector3 moveVector;
+    private float distance;
+    private float oldSpeed;
+    private Animator myAnimator;
+    private Rigidbody2D rb;
+    private KnockBack knockBack;
     protected void Awake()
     {
         base.Awake();
@@ -21,11 +29,23 @@ public class SkeletonController : Singleton<SkeletonController>
             enemyTransform = GetComponent<Transform>();
             mySpriteRenderer = GetComponent<SpriteRenderer>();
         }
+        myAnimator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+        knockBack = GetComponent<KnockBack>();
+    }
+
+    private void Start()
+    {
+        oldSpeed = speed;
+        distance = (playerTransform.position - enemyTransform.position).magnitude;
     }
 
     private void Update()
     {
+        if (knockBack.gettingKnockedBack) { return; }
         NavigateEnemy();
+        MoveEnemy();
+        CheckAttack();
     }
 
     private void NavigateEnemy()
@@ -42,4 +62,52 @@ public class SkeletonController : Singleton<SkeletonController>
             mySpriteRenderer.flipX = false;
         }
     }
+
+    private void MoveEnemy()
+    {
+        distance = (playerTransform.position - enemyTransform.position).magnitude;
+        Debug.Log(SkeletonSword.Instance.getIsAttack());
+        if (!SkeletonSword.Instance.getIsAttack() && distance > 2)
+        {
+            Vector3 enemyVector = enemyTransform.position;
+            Vector3 TargetMoveLeft = playerTransform.position;
+            TargetMoveLeft.x -= 2;
+            Vector3 TargetMoveRight = playerTransform.position;
+            TargetMoveRight.x += 2;
+            if ((TargetMoveLeft - enemyVector).sqrMagnitude <= (TargetMoveRight - enemyVector).sqrMagnitude)
+            {
+                moveVector = TargetMoveLeft;
+            }
+            else
+            {
+                moveVector = TargetMoveRight;
+            }
+            if (distance <= OutSight)
+            {
+                speed = oldSpeed;
+            }
+            else
+            {
+                speed = 0;
+            }
+
+            myAnimator.SetFloat("Speed", speed);
+
+            Vector2 direction = ((Vector2)moveVector - rb.position).normalized;
+
+            rb.MovePosition(rb.position + direction * speed * Time.fixedDeltaTime);
+        }
+    }
+
+    private void CheckAttack()
+    {
+        if (distance <= 2)
+        {
+            rb.velocity = Vector2.zero;
+            SkeletonSword.Instance.Attack();
+            speed = 0;
+            myAnimator.SetFloat("Speed", speed);
+        }
+    }
+
 }
