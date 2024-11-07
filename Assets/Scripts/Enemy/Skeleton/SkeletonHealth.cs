@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkeletonHealth : Singleton<SkeletonHealth>
+public class SkeletonHealth : MonoBehaviour
 {
     [SerializeField] private int skeletonMaxHealth = 3;
 
@@ -14,7 +14,6 @@ public class SkeletonHealth : Singleton<SkeletonHealth>
 
     private void Awake()
     {
-        base.Awake();
         knockBack = GetComponent<KnockBack>();
         myAnimator = GetComponent<Animator>();
     }
@@ -44,7 +43,7 @@ public class SkeletonHealth : Singleton<SkeletonHealth>
         currentHealth = 0;
         this.transform.GetChild(0).gameObject.SetActive(false);
         myAnimator.SetTrigger("Death");
-        SkeletonSword.Instance.stopAttack = true;
+        this.transform.GetChild(0).GetChild(0).gameObject.GetComponent<SkeletonSword>().stopAttack = true;
         yield return new WaitForSeconds(1f);
         Destroy(this.gameObject);
     }

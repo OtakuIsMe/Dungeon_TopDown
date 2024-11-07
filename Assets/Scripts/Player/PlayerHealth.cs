@@ -36,13 +36,12 @@ public class PlayerHealth : MonoBehaviour
         SkeletonController skeleton = other.gameObject.GetComponent<SkeletonController>();
         if (skeleton != null && !knockBack.gettingKnockedBack)
         {
-            TakeDamage(1);
-            knockBack.GetKnockBack(other.gameObject.transform);
+            TakeDamage(1, other.gameObject.transform);
             UpdateHealthSlider();
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, Transform transform)
     {
         if (!knockBack.gettingKnockedBack)
         {
@@ -50,7 +49,7 @@ public class PlayerHealth : MonoBehaviour
             UpdateHealthSlider();
             if (playerHealth > 0)
             {
-                knockBack.GetKnockBack(SkeletonController.Instance.transform);
+                knockBack.GetKnockBack(transform);
             }
             else
             {
@@ -73,7 +72,10 @@ public class PlayerHealth : MonoBehaviour
     {
         playerHealth = 0;
         this.transform.GetChild(0).gameObject.SetActive(false);
-        SkeletonSword.Instance.stopAttack = true;
+        foreach (var skeletonSword in FindObjectsOfType<SkeletonSword>())
+        {
+            skeletonSword.stopAttack = true;
+        }
         PlayerController.Instance.isControlPlayer = false;
         myAnimator.SetTrigger("Death");
         yield return new WaitForSeconds(1f);

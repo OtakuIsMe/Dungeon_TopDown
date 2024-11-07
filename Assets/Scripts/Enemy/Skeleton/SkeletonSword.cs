@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class SkeletonSword : Singleton<SkeletonSword>
+public class SkeletonSword : MonoBehaviour
 {
     [SerializeField] private float CDWaitBeforeAttack = 1f;
     [SerializeField] private float CDAttack = 0.5f;
@@ -18,7 +18,6 @@ public class SkeletonSword : Singleton<SkeletonSword>
     AudioManager audioManager;
     protected void Awake()
     {
-        base.Awake();
         activeWeaponSkeleton = GetComponentInParent<ActiveWeaponSkeleton>();
         skeletonController = GetComponentInParent<SkeletonController>();
         myAnimator = GetComponent<Animator>();

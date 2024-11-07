@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 
-public class SkeletonController : Singleton<SkeletonController>
+public class SkeletonController : MonoBehaviour
 {
     [SerializeField] private float speed = 2f;
     [SerializeField] private float OutSight = 10f;
@@ -21,7 +21,6 @@ public class SkeletonController : Singleton<SkeletonController>
     private KnockBack knockBack;
     protected void Awake()
     {
-        base.Awake();
         GameObject player = GameObject.Find("Player");
         if (player)
         {
@@ -66,8 +65,7 @@ public class SkeletonController : Singleton<SkeletonController>
     private void MoveEnemy()
     {
         distance = (playerTransform.position - enemyTransform.position).magnitude;
-        Debug.Log(SkeletonSword.Instance.getIsAttack());
-        if (!SkeletonSword.Instance.getIsAttack() && distance > 2)
+        if (!this.transform.GetChild(0).GetChild(0).gameObject.GetComponent<SkeletonSword>().getIsAttack() && distance > 2)
         {
             Vector3 enemyVector = enemyTransform.position;
             Vector3 TargetMoveLeft = playerTransform.position;
@@ -104,7 +102,7 @@ public class SkeletonController : Singleton<SkeletonController>
         if (distance <= 2)
         {
             rb.velocity = Vector2.zero;
-            SkeletonSword.Instance.Attack();
+            this.transform.GetChild(0).GetChild(0).gameObject.GetComponent<SkeletonSword>().Attack();
             speed = 0;
             myAnimator.SetFloat("Speed", speed);
         }
